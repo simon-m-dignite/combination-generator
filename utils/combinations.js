@@ -21,6 +21,9 @@ export const filterCombinations = (combinations, excludedNumber, filters) => {
     const hasConsecutiveOdds = combination.some(
       (num, index) => num % 2 !== 0 && combination[index + 1] % 2 !== 0
     );
+    const hasAllEvens = combination.every((num) => num % 2 === 0);
+    const hasAllOdds = combination.every((num) => num % 2 !== 0);
+
     const hasThreeConsecutive = combination.some(
       (_, i) =>
         i <= combination.length - 3 &&
@@ -54,8 +57,9 @@ export const filterCombinations = (combinations, excludedNumber, filters) => {
 
     return (
       !containsExcludedNumber &&
-      (!filters.excludeAllEvenNumbers || !hasConsecutiveEvens) &&
-      (!filters.excludeAllOddNumbers || !hasConsecutiveOdds) &&
+      (!filters.excludeAllEvenNumbers ||
+        (!hasAllEvens && !hasConsecutiveEvens)) &&
+      (!filters.excludeAllOddNumbers || (!hasAllOdds && !hasConsecutiveOdds)) &&
       (!filters.excludeThreeConsecutiveNumbers || !hasThreeConsecutive) &&
       (!filters.excludeThreeNumbersInRangeBetween1to9 ||
         !hasThreeInRange(1, 9)) &&

@@ -15,8 +15,8 @@ const validate = (values) => {
 
   if (!values.endValue) {
     errors.endValue = "Required";
-  } else if (values.endValue > 100) {
-    errors.endValue = "Value can not be greater than 100";
+  } else if (values.endValue > 65) {
+    errors.endValue = "Value can not be greater than 65";
   }
 
   if (!values.combinationSize) {
@@ -133,9 +133,9 @@ const CombinationGenerator = () => {
     <div className="w-full min-h-screen flex flex-col items-center justify-center gap-4 px-4 py-10 bg-gray-50">
       <form
         onSubmit={(e) => {
-          const buttonType = e.nativeEvent.submitter.name; // Get the button's name
-          formik.setFieldValue("buttonType", buttonType, false); // Add buttonType to formik values
-          formik.handleSubmit(e); // Submit formik
+          const buttonType = e.nativeEvent.submitter.name;
+          formik.setFieldValue("buttonType", buttonType, false);
+          formik.handleSubmit(e);
         }}
         // onSubmit={formik.handleSubmit}
         className="w-full lg:w-[45%] bg-white p-10 rounded-2xl"
@@ -176,6 +176,7 @@ const CombinationGenerator = () => {
             id="endValue"
             name="endValue"
             min={1}
+            max={65}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.endValue}
