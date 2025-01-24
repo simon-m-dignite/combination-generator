@@ -1,3 +1,4 @@
+// Function to generate combinations
 export const generateCombinations = (arr, size) => {
   const results = [];
   const combine = (path, index) => {
@@ -13,6 +14,7 @@ export const generateCombinations = (arr, size) => {
   return results;
 };
 
+// Function to filter combinations based on various rules
 export const filterCombinations = (combinations, excludedNumber, filters) => {
   return combinations.filter((combination) => {
     const hasConsecutiveEvens = combination.some(
@@ -21,8 +23,8 @@ export const filterCombinations = (combinations, excludedNumber, filters) => {
     const hasConsecutiveOdds = combination.some(
       (num, index) => num % 2 !== 0 && combination[index + 1] % 2 !== 0
     );
-    const hasAllEvens = combination.every((num) => num % 2 === 0);
-    const hasAllOdds = combination.every((num) => num % 2 !== 0);
+    const hasAllEvens = combination.every((num) => num % 2 === 0); // Check if all numbers are even
+    const hasAllOdds = combination.every((num) => num % 2 !== 0); // Check if all numbers are odd
 
     const hasThreeConsecutive = combination.some(
       (_, i) =>
@@ -55,11 +57,26 @@ export const filterCombinations = (combinations, excludedNumber, filters) => {
       (num, index) => combination[index + 1] === num + 1
     );
 
+    // Check for consecutive even numbers
+    const hasConsecutiveEvenNumbers = combination.some(
+      (num, index) => num % 2 === 0 && combination[index + 1] % 2 === 0
+    );
+
+    // Check for consecutive odd numbers (only pairs like 3, 5, etc.)
+    const hasConsecutiveOddNumbers = combination.some(
+      (num, index) =>
+        num % 2 !== 0 &&
+        combination[index + 1] % 2 !== 0 &&
+        combination[index + 1] === num + 2 // Ensure it's a pair like 3 and 5, 7 and 9, etc.
+    );
+
     return (
       !containsExcludedNumber &&
-      (!filters.excludeAllEvenNumbers ||
-        (!hasAllEvens && !hasConsecutiveEvens)) &&
-      (!filters.excludeAllOddNumbers || (!hasAllOdds && !hasConsecutiveOdds)) &&
+      (!filters.excludeAllEvenNumbers || !hasAllEvens) && // Exclude combinations that are all even numbers
+      (!filters.excludeAllOddNumbers || !hasAllOdds) && // Exclude combinations that are all odd numbers
+      (!filters.excludeTwoConsecutiveEvenNumbers ||
+        !hasConsecutiveEvenNumbers) &&
+      (!filters.excludeTwoConsecutiveOddNumbers || !hasConsecutiveOddNumbers) &&
       (!filters.excludeThreeConsecutiveNumbers || !hasThreeConsecutive) &&
       (!filters.excludeThreeNumbersInRangeBetween1to9 ||
         !hasThreeInRange(1, 9)) &&

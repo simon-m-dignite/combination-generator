@@ -32,6 +32,8 @@ const CombinationGenerator = () => {
   const [filters, setFilters] = useState({
     excludeAllEvenNumbers: false,
     excludeAllOddNumbers: false,
+    excludeTwoConsecutiveEvenNumbers: false,
+    excludeTwoConsecutiveOddNumbers: false,
     excludeThreeConsecutiveNumbers: false,
     excludeThreeNumbersInRangeBetween1to9: false,
     excludeThreenumbersInRangeBetween10to19: false,
@@ -81,10 +83,9 @@ const CombinationGenerator = () => {
             filters,
           }),
         });
-        console.log("response >>>", res);
-
+        // console.log("response >>>", res);
         const data = await res.json();
-        console.log("data >>>", data);
+        // console.log("data >>>", data);
 
         if (data) {
           const buttonType = values.buttonType;
@@ -248,6 +249,10 @@ const CombinationGenerator = () => {
                 "Exclude combinations that are all even numbers",
               excludeAllOddNumbers:
                 "Exclude combinations that are all odd numbers",
+              excludeTwoConsecutiveEvenNumbers:
+                "Exclude 2 consecutive even numbers",
+              excludeTwoConsecutiveOddNumbers:
+                "Exclude 2 consecutive odd numbers",
               excludeThreeConsecutiveNumbers:
                 "Exclude all combinations that contain 3 or more consecutive numbers",
               excludeThreeNumbersInRangeBetween1to9:
